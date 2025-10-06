@@ -1,13 +1,15 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.widget.Button
+
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -24,16 +26,24 @@ class MainActivity : AppCompatActivity() {
         val etUser = findViewById<EditText>(R.id.id_user)
         val etPass = findViewById<EditText>(R.id.id_pass)
         val btn = findViewById<Button>(R.id.btn_login)
+        val btn2 = findViewById<Button>(R.id.btn_res)
 
         btn.setOnClickListener {
             val user = etUser.text.toString()
             val pass = etPass.text.toString()
 
             if (user == "admin" && pass == "pass") {
-                //Inicio sesion
+                val intent = Intent(this@MainActivity, Home_act::class.java)
+                startActivity(intent)
+
             } else {
                 //Credenciales incorrectas
             }
+        }
+
+        btn2.setOnClickListener {
+            val intent = Intent(this@MainActivity, Registro_act::class.java)
+            startActivity(intent)
         }
     }
 }

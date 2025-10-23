@@ -152,6 +152,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="16dp"
+                    android:background="@drawable/boton_estilo2"
+                    android:textColor="@color/white"
                     android:text="Registrate" />
 
                 <androidx.constraintlayout.widget.Barrier

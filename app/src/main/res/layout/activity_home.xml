@@ -88,8 +88,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="393dp"
-        android:layout_height="481dp"
+        android:layout_width="405dp"
+        android:layout_height="476dp"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -98,12 +98,12 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="400dp"
+            android:layout_height="478dp">
 
             <TableLayout
-                android:layout_width="379dp"
-                android:layout_height="473dp"
+                android:layout_width="387dp"
+                android:layout_height="444dp"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,18 +117,39 @@
 
                     <Button
                         android:id="@+id/button"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:text="Button" />
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:background="@drawable/boton_estilo3"
+                        android:textColor="@color/white"
+                        android:text="Pronunciation Exercises" />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/button2"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:text="Button" />
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:background="@drawable/boton_estilo3"
+
+                        android:textColor="@color/white"
+                        android:text="Conversation  Practice" />
 
                 </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="215dp"
+                    android:gravity="center">
 
+
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"/>
+
+
+                </TableRow>
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="215dp"
@@ -136,15 +157,23 @@
 
                     <Button
                         android:id="@+id/button3"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:text="Button" />
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:background="@drawable/boton_estilo3"
+                        android:textColor="@color/white"
+                        android:text="Grammar      Correction" />
+
+                    <Space
+                        android:layout_width="10dp"
+                        android:layout_height="wrap_content" />
 
                     <Button
                         android:id="@+id/button4"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:text="Button" />
+                        android:layout_width="175dp"
+                        android:layout_height="175dp"
+                        android:background="@drawable/boton_estilo3"
+                        android:textColor="@color/white"
+                        android:text="Preferences" />
                 </TableRow>
 
             </TableLayout>

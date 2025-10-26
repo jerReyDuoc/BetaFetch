@@ -99,16 +99,5 @@
         app:layout_constraintWidth_percent="0.92"/>
 
     <!-- Pie: crédito o versión -->
-    <TextView
-        android:id="@+id/tvFooter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mini-quiz • Tema rojo"
-        android:textSize="12sp"
-        android:textColor="#FFEBEE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="14dp"
-        android:layout_marginEnd="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

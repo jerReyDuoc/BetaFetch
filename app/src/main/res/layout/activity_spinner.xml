@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    android:padding="16dp">
+    tools:context=".Spinner_act">
 
     <!-- Contenedor tipo card para la pregunta -->
     <androidx.cardview.widget.CardView
@@ -42,11 +42,11 @@
             <TextView
                 android:id="@+id/tvHint"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="51dp"
+                android:layout_marginTop="8dp"
                 android:text="Selecciona la alternativa correcta"
                 android:textColor="#FFCDD2"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp"/>
+                android:textSize="12sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

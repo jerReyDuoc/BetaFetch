@@ -14,9 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-private lateinit var tvQuestion: TextView
-private lateinit var tvFeedback: TextView
-private lateinit var spinnerOptions: Spinner
 
 class Spinner_act : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -48,6 +45,9 @@ class Spinner_act : AppCompatActivity() {
     }
 
     fun mostrarEjercicio(ejercicio: Ejercicio) {
+        val tvQuestion = findViewById<TextView>(R.id.tvQuestion)
+        val spinnerOptions = findViewById<Spinner>(R.id.spinnerOptions)
+        val tvFeedback = findViewById<TextView>(R.id.tvFeedback)
         tvQuestion.text = ejercicio.problema
 
         // Adaptador para el Spinner
@@ -63,13 +63,15 @@ class Spinner_act : AppCompatActivity() {
     }
 
     private fun verificarRespuesta(ejercicio: Ejercicio) {
+        val spinnerOptions = findViewById<Spinner>(R.id.spinnerOptions)
+        val tvFeedback = findViewById<TextView>(R.id.tvFeedback)
         val seleccion = spinnerOptions.selectedItem.toString()
 
         if (ejercicio.validarSolucion(seleccion)) {
-            tvFeedback.setText("✅ ¡Correcto!")
+            tvFeedback.text = "✅ ¡Correcto!"
             tvFeedback.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
         } else {
-            tvFeedback.setText("❌ Incorrecto. La respuesta correcta es: ${ejercicio.solucion}")
+            tvFeedback.text = "❌ Incorrecto. La respuesta correcta es: ${ejercicio.solucion}"
             tvFeedback.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
         }
 

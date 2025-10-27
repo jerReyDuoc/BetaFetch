@@ -19,12 +19,19 @@ class Home_act : AppCompatActivity() {
             insets
         }
 
-        val btn = findViewById<Button>(R.id.button3)
+        val btn3 = findViewById<Button>(R.id.button3)
+        val btn4 = findViewById<Button>(R.id.button4)
 
-        btn.setOnClickListener {
+        btn3.setOnClickListener {
             val intent = Intent(this@Home_act, Spinner_act::class.java)
             startActivity(intent)
         }
+
+        btn4.setOnClickListener {
+            val intent = Intent(this@Home_act, Listar_act::class.java)
+            startActivity(intent)
+        }
+
 
     }
 }

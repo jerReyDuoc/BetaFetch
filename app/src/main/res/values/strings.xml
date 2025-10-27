@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">QuizRojo</string>
+    <string name="app_name">Fetch</string>
     <string name="question_text">¿Cuál es la capital de Francia?</string>
     <string name="confirm_button">Confirmar respuesta</string>
 

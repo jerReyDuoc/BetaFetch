@@ -58,5 +58,46 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "DATABASE_NAME", nu
         onCreate(db)
     }
 
+    fun obtenerTodosLosUsuarios(): List<Usuario> {
+        val listaUsuarios = mutableListOf<Usuario>()
+
+        // 1. Obtener una referencia a la DB para lectura
+        val db = readableDatabase
+
+        // 2. Definir la consulta (query)
+        val query = "SELECT * FROM $TABLE_NAME"
+
+        // 3. Ejecutar la consulta y obtener el Cursor
+        val cursor = db.rawQuery(query, null)
+
+        // 4. Iterar sobre los resultados
+        if (cursor.moveToFirst()) {
+            do {
+                // Leer cada columna del registro actual
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+                val nombre = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE))
+                val apellido = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APELLIDO))
+                val correo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CORREO))
+                val pais = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAIS))
+                val celular = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CELULAR))
+                val fecNac = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FECNAC))
+                val nomUsuario = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMUSUARIO))
+                val contrasena = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTRASENA))
+
+                // 5. Crear el objeto y añadirlo a la lista
+                val usuario = Usuario(
+                    id, nombre, apellido, correo, pais, celular, fecNac, nomUsuario, contrasena
+                )
+                listaUsuarios.add(usuario)
+
+            } while (cursor.moveToNext())
+        }
+
+        // 6. Cerrar el Cursor y la DB
+        cursor.close()
+        db.close()
+
+        return listaUsuarios
+    }
 
 }

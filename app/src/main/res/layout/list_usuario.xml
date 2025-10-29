@@ -31,4 +31,12 @@
         android:textColor="@android:color/darker_gray"
         android:text="correo@ejemplo.com"/>
 
+    <TextView
+        android:id="@+id/pais_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pais"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
+
 </LinearLayout>

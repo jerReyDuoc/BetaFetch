@@ -56,11 +56,13 @@ class UsuarioAdapter(context: Context, val usuarios: List<Usuario>) :
             val nomUsuarioTextView = listItemView.findViewById<TextView>(R.id.text_nombre_usuario)
             val nomApellidoTextView = listItemView.findViewById<TextView>(R.id.text_nombre_apellido)
             val correoTextView = listItemView.findViewById<TextView>(R.id.text_correo)
+            val paisTextView = listItemView.findViewById<TextView>(R.id.pais_text)
 
 
             nomUsuarioTextView.text = usuarioActual.nomUsuario
             nomApellidoTextView.text = "${usuarioActual.nombre} ${usuarioActual.apellido}"
             correoTextView.text = usuarioActual.correo
+            paisTextView.text = usuarioActual.pais
         }
 
         return listItemView

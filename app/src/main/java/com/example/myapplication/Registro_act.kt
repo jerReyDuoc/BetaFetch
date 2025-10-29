@@ -2,8 +2,10 @@ package com.example.myapplication
 
 import android.content.ContentValues
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -23,11 +25,21 @@ class Registro_act : AppCompatActivity() {
         }
 
         val dbHelper = DBHelper(this)
+        val spinner_pais: Spinner = findViewById(R.id.spinner_pais)
+
+        val paises = listOf("Chile","Argentina","Peru")
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            paises
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner_pais.adapter = adapter
 
         val nombre = findViewById<EditText>(R.id.id_nom)
         val apellido = findViewById<EditText>(R.id.id_ape)
         val correo = findViewById<EditText>(R.id.id_correo)
-        val pais = "Chile"
         val celular = findViewById<EditText>(R.id.id_cel)
         val fecnac = findViewById<EditText>(R.id.id_fec)
         val nomuser = findViewById<EditText>(R.id.id_nomUser)
@@ -35,6 +47,7 @@ class Registro_act : AppCompatActivity() {
         val boton = findViewById<Button>(R.id.btn_reg)
 
         boton.setOnClickListener {
+            val pais = spinner_pais.selectedItem.toString() // se obtiene la opcion seleccionada en el spinner :)
             val db = dbHelper.writableDatabase  // permisos de escritura a la database
 
             val valores = ContentValues().apply{  // aplicamos contentValues para añadir datos al arreglo de datos

@@ -100,4 +100,17 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "DATABASE_NAME", nu
         return listaUsuarios
     }
 
+    fun eliminarUsuario(idUsuario: Int): Int {
+        val db = writableDatabase
+
+        val resultado = db.delete(
+            TABLE_NAME,
+            "$COLUMN_ID = ?",
+            arrayOf(idUsuario.toString())
+        )
+
+        db.close()
+        return resultado
+    }
+
 }

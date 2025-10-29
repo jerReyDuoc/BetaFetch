@@ -14,22 +14,23 @@ class Usuario {
     var nombre: String
     var apellido: String
     var correo: String
+    var pais: String
     var celular: String
     var fecNac: String
     var nomUsuario: String
     var contrasena: String
-    var pais: String
 
-    constructor(id: Int, nombre: String, apellido: String, correo: String, celular: String, fecNac: String, nomUsuario: String, contrasena: String, pais: String) {
+
+    constructor(id: Int, nombre: String, apellido: String, correo: String, pais: String, celular: String, fecNac: String, nomUsuario: String, contrasena: String) {
         this.id = id
         this.nombre = nombre
         this.apellido = apellido
         this.correo = correo
+        this.pais = pais
         this.celular = celular
         this.fecNac = fecNac
         this.nomUsuario = nomUsuario
         this.contrasena = contrasena
-        this.pais = pais
     }
 
     fun imprimirDatos() {

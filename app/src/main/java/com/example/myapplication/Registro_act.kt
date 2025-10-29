@@ -43,11 +43,11 @@ class Registro_act : AppCompatActivity() {
                 put("nombre", nombre.text.toString())
                 put("apellido", apellido.text.toString())
                 put("correo", correo.text.toString())
+                put("pais", pais)
                 put("celular", celular.text.toString())
                 put("fecNac", fecnac.text.toString())
                 put("nomUsuario", nomuser.text.toString())
                 put("contrasena", contrasena.text.toString())
-                put("pais", pais)
             }
 
             val resultado = db.insert("Usuarios", null, valores)

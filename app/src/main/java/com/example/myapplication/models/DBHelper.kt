@@ -113,4 +113,45 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "DATABASE_NAME", nu
         return resultado
     }
 
+    fun buscarUsuario(user: String): Usuario? {
+        val db = readableDatabase
+        var usuario: Usuario? = null
+
+        val selection = "$COLUMN_NOMBRE = ?"
+        val selectionArgs = arrayOf(user)
+
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            selection,
+            selectionArgs,
+            null, // groupBy
+            null, // having
+            null  // orderBy
+        )
+
+        if (cursor.moveToFirst()) {
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+            val nombre = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE))
+            val apellido = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APELLIDO))
+            val correo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CORREO))
+            val pais = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAIS))
+            val celular = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CELULAR))
+            val fecNac = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FECNAC))
+            val nomUsuario = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMUSUARIO))
+            val contrasena = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTRASENA))
+
+
+            usuario = Usuario(
+                id, nombre, apellido, correo, pais, celular, fecNac, nomUsuario, contrasena
+            )
+        }
+
+        cursor.close()
+        db.close()
+
+        return usuario
+
+    }
+
 }

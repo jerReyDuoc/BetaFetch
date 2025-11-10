@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myapplication.models.DBHelper
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,23 +29,56 @@ class MainActivity : AppCompatActivity() {
         val etPass = findViewById<EditText>(R.id.id_pass)
         val btn = findViewById<Button>(R.id.btn_login)
         val btn2 = findViewById<Button>(R.id.btn_res)
+        val dbHelper = DBHelper(this)
 
         btn.setOnClickListener {
-            val user = etUser.text.toString()
-            val pass = etPass.text.toString()
+            val user = etUser.text.toString().trim()
+            val pass = etPass.text.toString().trim()
 
-            if (user == "admin" && pass == "pass") {
-                val intent = Intent(this@MainActivity, Home_act::class.java)
-                startActivity(intent)
+            //1. Valida que los campos tengan texto
+            if (validarCampo(etUser) && validarCampo(etPass)) {
 
-            } else {
-                //Credenciales incorrectas
+                //2. Para tener acceso por ahora, despues se elimina
+                if (user == "admin" && pass == "pass") {
+                    val intent = Intent(this@MainActivity, Home_act::class.java)
+                    startActivity(intent)
+
+                } else {
+
+                    //3. Validacion de existencia de datos
+                    val buscarUser = dbHelper.buscarUsuario(user)
+
+                    if (buscarUser != null) {
+
+                        //4. Valida que el la contraseña del usuario sea valida
+                        if (buscarUser.contrasena.equals(pass)) {
+                            val intent = Intent(this@MainActivity, Home_act::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } else {
+                        Toast.makeText(this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
         btn2.setOnClickListener {
             val intent = Intent(this@MainActivity, Registro_act::class.java)
             startActivity(intent)
+        }
+
+    }
+    fun validarCampo(editText: EditText): Boolean {
+        val texto = editText.toString().trim()
+        return if (texto.isEmpty()) {
+            editText.error = "Campo obligatorio"
+            editText.requestFocus()
+            false
+        } else {
+            true
         }
     }
 }

@@ -15,8 +15,6 @@ class Ejercicio {
     }
 
     fun validarSolucion(respuestaUsuario: String): Boolean {
-        // Usamos trim() para quitar espacios en blanco al inicio y al final
-        // Usamos equals() con ignoreCase = true para que no importe si es mayúscula o minúscula
         return respuestaUsuario.trim().equals(solucion, ignoreCase = true)
     }
 }

@@ -36,6 +36,13 @@ class Usuario {
     fun imprimirDatos() {
         println("Usuario: $nomUsuario, Nombre: $nombre $apellido, Correo: $correo")
     }
+
+    fun validarUsuario(nomUser: String, pass: String): Boolean {
+        if (nomUser.equals(nomUsuario) && pass.equals(contrasena)) {
+            return true
+            }
+        else { return false }
+    }
 }
 
 class UsuarioAdapter(context: Context, val usuarios: List<Usuario>) :

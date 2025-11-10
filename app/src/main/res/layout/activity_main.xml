@@ -67,6 +67,7 @@
                     android:background="@drawable/borde_redondo"
                     android:ems="10"
                     android:hint="  Nombre de usuario"
+                    app:errorEnabled="true"
                     android:inputType="text" />
 
                 <EditText
@@ -77,7 +78,8 @@
                     android:background="@drawable/borde_redondo"
                     android:ems="10"
                     android:hint="  Contraseña"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    app:errorEnabled="true" />
 
                 <Button
                     android:id="@+id/btn_login"

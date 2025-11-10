@@ -154,4 +154,56 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "DATABASE_NAME", nu
 
     }
 
+    fun verificarCorreoExiste(correoBuscado: String): Boolean {
+        val db = readableDatabase
+
+        val selection = "$COLUMN_CORREO = ?"
+        val selectionArgs = arrayOf(correoBuscado)
+
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf("COUNT($COLUMN_ID)"), // Solo necesitamos saber cuántos hay
+            selection,
+            selectionArgs,
+            null, null, null
+        )
+
+        var existe = false
+        if (cursor.moveToFirst()) {
+            if (cursor.getInt(0) > 0) {
+                existe = true
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return existe
+    }
+
+    fun verificarNomUsuarioExiste(nomUsuarioBuscado: String): Boolean {
+        val db = readableDatabase
+
+        val selection = "$COLUMN_NOMUSUARIO = ?"
+        val selectionArgs = arrayOf(nomUsuarioBuscado)
+
+        val cursor = db.query(
+            TABLE_NAME,
+            arrayOf("COUNT($COLUMN_ID)"),
+            selection,
+            selectionArgs,
+            null, null, null
+        )
+
+        var existe = false
+        if (cursor.moveToFirst()) {
+            if (cursor.getInt(0) > 0) {
+                existe = true
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return existe
+    }
+
 }

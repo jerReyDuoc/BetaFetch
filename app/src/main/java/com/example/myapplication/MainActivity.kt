@@ -49,9 +49,9 @@ class MainActivity : AppCompatActivity() {
                     val buscarUser = dbHelper.buscarUsuario(user)
 
                     if (buscarUser != null) {
-
+                        val validacion = buscarUser.contrasena
                         //4. Valida que el la contraseña del usuario sea valida
-                        if (buscarUser.contrasena.equals(pass)) {
+                        if (validacion == pass) {
                             val intent = Intent(this@MainActivity, Home_act::class.java)
                             startActivity(intent)
                         } else {
@@ -72,13 +72,10 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun validarCampo(editText: EditText): Boolean {
-        val texto = editText.toString().trim()
-        return if (texto.isEmpty()) {
-            editText.error = "Campo obligatorio"
-            editText.requestFocus()
-            false
-        } else {
-            true
+        if (editText.text.toString().trim().isEmpty()) {
+            editText.error = "Este campo es requerido"
+            return false
         }
+        return true
     }
 }

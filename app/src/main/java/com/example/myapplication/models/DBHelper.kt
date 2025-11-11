@@ -14,7 +14,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, "DATABASE_NAME", nu
     companion object  {
         // --- TABLA USUARIOS ---
         private const val DATABASE_NAME = "DBFetch.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "Usuarios"
         private const val COLUMN_ID = "id"
         private const val COLUMN_NOMBRE = "nombre"

@@ -47,13 +47,12 @@
                         app:srcCompat="@drawable/fetch_simbolo" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/text_bienvenida"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:fontFamily="@font/inter_bold"
-                        android:text="Welcome Admin!" />
+                        android:fontFamily="@font/inter_bold" />
                 </LinearLayout>
 
                 <LinearLayout

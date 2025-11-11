@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,8 +20,16 @@ class Home_act : AppCompatActivity() {
             insets
         }
 
+        val bienvenidaTextView = findViewById<TextView>(R.id.text_bienvenida)
+        val nombreUsuario = intent.getStringExtra("EXTRA_USERNAME")
         val btn3 = findViewById<Button>(R.id.button3)
         val btn4 = findViewById<Button>(R.id.button4)
+
+        if (nombreUsuario != null && nombreUsuario.isNotEmpty()) {
+            bienvenidaTextView.text = "Welcome $nombreUsuario!"
+        } else {
+            bienvenidaTextView.text = "Welcome!"
+        }
 
         btn3.setOnClickListener {
             val intent = Intent(this@Home_act, Spinner_act::class.java)

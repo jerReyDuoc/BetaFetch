@@ -67,7 +67,12 @@ class Registro_act : AppCompatActivity() {
                 return@setOnClickListener // Detiene la ejecución si hay campos vacíos
             }
 
-            //2. Verifica que el correo no exista
+            //2. Verifica que el correo sea valido y su existencia
+            if (!esCorreoValido(email, correo)) {
+                Toast.makeText(this, "Por favor, ingresa un correo electrónico válido.", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if (dbHelper.verificarCorreoExiste(email)) {
                 Toast.makeText(this, "Error: El correo electrónico ya está registrado.", Toast.LENGTH_LONG).show()
                 correo.error = "Correo ya en uso"
@@ -114,5 +119,17 @@ class Registro_act : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun esCorreoValido(correo: String, editText: EditText): Boolean {
+        // Expresión regular estándar para la mayoría de correos: algo@algo.dominio
+        val patronCorreo = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
+
+        if (correo.matches(patronCorreo)) {
+            return true
+        } else {
+            editText.error = "Formato de correo inválido (ej: usuario@dominio.com)"
+            return false
+        }
     }
 }

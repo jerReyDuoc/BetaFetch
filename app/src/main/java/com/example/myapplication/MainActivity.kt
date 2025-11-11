@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                         //4. Valida que el la contraseña del usuario sea valida
                         if (validacion == pass) {
                             val intent = Intent(this@MainActivity, Home_act::class.java)
+                            intent.putExtra("EXTRA_USERNAME", buscarUser.nomUsuario)
                             startActivity(intent)
                         } else {
                             Toast.makeText(this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()

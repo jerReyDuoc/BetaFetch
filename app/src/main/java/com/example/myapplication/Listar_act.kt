@@ -1,5 +1,5 @@
 package com.example.myapplication
-
+//Esta activity esta obsoleta, se va a eliminar pronto
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.ListView

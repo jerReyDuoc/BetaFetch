@@ -100,14 +100,19 @@ class Registro_act : AppCompatActivity() {
             }
 
             val resultado = db.insert("Usuarios", null, valores)
-            db.close()
 
             if(resultado != -1L)  // validamos la insercion
             {
+                // CREAR PROGRESO INICIAL PARA EL NUEVO USUARIO
+                dbHelper.crearProgresoInicial(resultado.toInt())
+
                 Toast.makeText(this, "Se ha guardado !!!!", Toast.LENGTH_LONG).show()
                 val intent = Intent(this@Registro_act, MainActivity::class.java)
                 startActivity(intent)
+                finish()
             }
+
+            db.close()
 
         }
 

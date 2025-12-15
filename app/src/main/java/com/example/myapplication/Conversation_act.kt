@@ -331,6 +331,15 @@ class Conversation_act : AppCompatActivity(), TextToSpeech.OnInitListener {
         builder.setMessage("Great job! You've completed this conversation scenario.\n\nWould you like to try another scenario?")
 
         builder.setPositiveButton("Next Scenario") { dialog, _ ->
+            // GUARDAR PROGRESO
+            val sharedPref = getSharedPreferences("FetchPrefs", android.content.Context.MODE_PRIVATE)
+            val usuarioId = sharedPref.getInt("userId", -1)
+
+            if (usuarioId != -1) {
+                val dbHelper = com.example.myapplication.models.DBHelper(this)
+                dbHelper.actualizarProgresoConversacion(usuarioId)
+            }
+
             currentScenarioIndex++
             if (currentScenarioIndex >= scenarios.size) {
                 Toast.makeText(this, "🎊 Congratulations! You've completed all scenarios!", Toast.LENGTH_LONG).show()

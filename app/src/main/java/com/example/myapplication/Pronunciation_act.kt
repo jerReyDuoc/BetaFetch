@@ -262,13 +262,21 @@ class Pronunciation_act : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun nextWord() {
+        // GUARDAR PROGRESO
+        val sharedPref = getSharedPreferences("FetchPrefs", android.content.Context.MODE_PRIVATE)
+        val usuarioId = sharedPref.getInt("userId", -1)
+
+        if (usuarioId != -1) {
+            val dbHelper = com.example.myapplication.models.DBHelper(this)
+            dbHelper.actualizarProgresoPronunciacion(usuarioId)
+        }
+
         currentWordIndex++
         if (currentWordIndex >= palabras.size) {
             Toast.makeText(this, "🎉 Excellent work! You've completed all pronunciation exercises!", Toast.LENGTH_LONG).show()
             finish()
         } else {
             loadWord()
-            // Limpiar grabaciones anteriores
             mediaPlayer?.release()
             mediaPlayer = null
         }

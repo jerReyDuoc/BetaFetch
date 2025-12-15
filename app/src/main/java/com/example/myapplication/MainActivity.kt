@@ -52,9 +52,25 @@ class MainActivity : AppCompatActivity() {
                         val validacion = buscarUser.contrasena
                         //4. Valida que el la contraseña del usuario sea valida
                         if (validacion == pass) {
+                            // GUARDAR SESIÓN
+                            val sharedPref = getSharedPreferences("FetchPrefs", MODE_PRIVATE)
+                            with(sharedPref.edit()) {
+                                putInt("userId", buscarUser.id)
+                                putString("username", buscarUser.nomUsuario)
+                                putBoolean("isLoggedIn", true)
+                                apply()
+                            }
+
+                            // CREAR PROGRESO SI NO EXISTE
+                            val progreso = dbHelper.obtenerProgreso(buscarUser.id)
+                            if (progreso == null) {
+                                dbHelper.crearProgresoInicial(buscarUser.id)
+                            }
+
                             val intent = Intent(this@MainActivity, Home_act::class.java)
                             intent.putExtra("EXTRA_USERNAME", buscarUser.nomUsuario)
                             startActivity(intent)
+                            finish() // Importante: cerrar MainActivity
                         } else {
                             Toast.makeText(this, "Usuario o contraseña incorrecta", Toast.LENGTH_SHORT).show()
                         }

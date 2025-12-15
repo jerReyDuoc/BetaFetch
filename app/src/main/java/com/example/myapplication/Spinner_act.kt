@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import Ejercicio
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -17,6 +18,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.myapplication.models.DBHelper
 
 class Spinner_act : AppCompatActivity() {
 
@@ -31,73 +33,24 @@ class Spinner_act : AppCompatActivity() {
     private lateinit var imgFeedback: ImageView
     private lateinit var progressBar: ProgressBar
     private lateinit var tvProgress: TextView
+    private lateinit var dbHelper: DBHelper
 
     private var currentExerciseIndex = 0
     private var correctAnswers = 0
     private var hasAnswered = false
+    private var usuarioId: Int = -1
 
-    // Lista de ejercicios de gramática
     private val ejercicios = listOf(
-        Ejercicio(
-            id = 1,
-            problema = "I _____ with my dog every morning",
-            solucion = "play",
-            alternativas = listOf("play", "plays", "playing", "played")
-        ),
-        Ejercicio(
-            id = 2,
-            problema = "She _____ to the gym three times a week",
-            solucion = "goes",
-            alternativas = listOf("go", "goes", "going", "gone")
-        ),
-        Ejercicio(
-            id = 3,
-            problema = "They _____ studying English for two years",
-            solucion = "have been",
-            alternativas = listOf("are", "have been", "were", "has been")
-        ),
-        Ejercicio(
-            id = 4,
-            problema = "Last night, I _____ a movie with my friends",
-            solucion = "watched",
-            alternativas = listOf("watch", "watches", "watched", "watching")
-        ),
-        Ejercicio(
-            id = 5,
-            problema = "If I _____ more time, I would travel the world",
-            solucion = "had",
-            alternativas = listOf("have", "had", "has", "having")
-        ),
-        Ejercicio(
-            id = 6,
-            problema = "The book _____ by millions of people",
-            solucion = "was read",
-            alternativas = listOf("read", "was read", "is reading", "reads")
-        ),
-        Ejercicio(
-            id = 7,
-            problema = "We _____ to the beach tomorrow if it's sunny",
-            solucion = "will go",
-            alternativas = listOf("go", "will go", "went", "going")
-        ),
-        Ejercicio(
-            id = 8,
-            problema = "He _____ his homework when I called him",
-            solucion = "was doing",
-            alternativas = listOf("does", "did", "was doing", "is doing")
-        ),
-        Ejercicio(
-            id = 9,
-            problema = "I wish I _____ speak five languages",
-            solucion = "could",
-            alternativas = listOf("can", "could", "will", "would")
-        ),
-        Ejercicio(
-            id = 10,
-            problema = "The project _____ by next Friday",
-            solucion = "must be finished",
-            alternativas = listOf("finish", "finishes", "must be finished", "finishing")
-        )
+        Ejercicio(1, "I _____ with my dog every morning", "play", listOf("play", "plays", "playing", "played")),
+        Ejercicio(2, "She _____ to the gym three times a week", "goes", listOf("go", "goes", "going", "gone")),
+        Ejercicio(3, "They _____ studying English for two years", "have been", listOf("are", "have been", "were", "has been")),
+        Ejercicio(4, "Last night, I _____ a movie with my friends", "watched", listOf("watch", "watches", "watched", "watching")),
+        Ejercicio(5, "If I _____ more time, I would travel the world", "had", listOf("have", "had", "has", "having")),
+        Ejercicio(6, "The book _____ by millions of people", "was read", listOf("read", "was read", "is reading", "reads")),
+        Ejercicio(7, "We _____ to the beach tomorrow if it's sunny", "will go", listOf("go", "will go", "went", "going")),
+        Ejercicio(8, "He _____ his homework when I called him", "was doing", listOf("does", "did", "was doing", "is doing")),
+        Ejercicio(9, "I wish I _____ speak five languages", "could", listOf("can", "could", "will", "would")),
+        Ejercicio(10, "The project _____ by next Friday", "must be finished", listOf("finish", "finishes", "must be finished", "finishing"))
     )
 
     @SuppressLint("MissingInflatedId")
@@ -111,9 +64,21 @@ class Spinner_act : AppCompatActivity() {
             insets
         }
 
+        dbHelper = DBHelper(this)
+        obtenerUsuarioId()
         initializeViews()
         loadExercise()
         setupClickListeners()
+    }
+
+    private fun obtenerUsuarioId() {
+        val sharedPref = getSharedPreferences("FetchPrefs", Context.MODE_PRIVATE)
+        usuarioId = sharedPref.getInt("userId", -1)
+
+        if (usuarioId == -1) {
+            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun initializeViews() {
@@ -142,12 +107,10 @@ class Spinner_act : AppCompatActivity() {
         val ejercicioActual = ejercicios[currentExerciseIndex]
         hasAnswered = false
 
-        // Actualizar UI
         tvQuestion.text = ejercicioActual.problema
         progressBar.progress = currentExerciseIndex + 1
         tvProgress.text = "${currentExerciseIndex + 1} / ${ejercicios.size}"
 
-        // Configurar Spinner
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -156,12 +119,9 @@ class Spinner_act : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerOptions.adapter = adapter
 
-        // Ocultar feedback
         cardFeedback.visibility = View.GONE
         btnConfirm.text = "Check Answer"
         btnConfirm.isEnabled = true
-
-        // Animación de entrada
         cardFeedback.alpha = 0f
     }
 
@@ -186,7 +146,11 @@ class Spinner_act : AppCompatActivity() {
 
         hasAnswered = true
 
-        // Mostrar feedback
+        // GUARDAR PROGRESO EN BD
+        if (usuarioId != -1) {
+            dbHelper.actualizarProgresoGramatica(usuarioId, isCorrect)
+        }
+
         cardFeedback.visibility = View.VISIBLE
         cardFeedback.animate()
             .alpha(1f)
@@ -200,10 +164,7 @@ class Spinner_act : AppCompatActivity() {
             showIncorrectFeedback(ejercicioActual, selectedAnswer)
         }
 
-        // Cambiar botón
         btnConfirm.text = "Next →"
-
-        // Animación del botón
         btnConfirm.animate()
             .scaleX(0.95f)
             .scaleY(0.95f)
@@ -221,31 +182,24 @@ class Spinner_act : AppCompatActivity() {
     private fun showCorrectFeedback(ejercicio: Ejercicio) {
         tvFeedback.text = "✅ Correct!"
         tvFeedback.setTextColor(ContextCompat.getColor(this, android.R.color.holo_green_dark))
-
         imgFeedback.setImageResource(android.R.drawable.checkbox_on_background)
         imgFeedback.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_green_dark))
-
         tvExplanation.text = getExplanation(ejercicio, true)
         tvExplanation.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
-
         cardFeedback.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_green_light))
     }
 
     private fun showIncorrectFeedback(ejercicio: Ejercicio, selectedAnswer: String) {
         tvFeedback.text = "❌ Incorrect"
         tvFeedback.setTextColor(ContextCompat.getColor(this, android.R.color.holo_red_dark))
-
         imgFeedback.setImageResource(android.R.drawable.ic_delete)
         imgFeedback.setColorFilter(ContextCompat.getColor(this, android.R.color.holo_red_dark))
-
         tvExplanation.text = "The correct answer is '${ejercicio.solucion}'. ${getExplanation(ejercicio, false)}"
         tvExplanation.setTextColor(ContextCompat.getColor(this, android.R.color.darker_gray))
-
         cardFeedback.setCardBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_red_light))
     }
 
     private fun getExplanation(ejercicio: Ejercicio, isCorrect: Boolean): String {
-        // Explicaciones específicas para cada ejercicio
         return when (ejercicio.id) {
             1 -> "Present simple uses the base form with 'I/you/we/they'."
             2 -> "Third person singular (she/he/it) adds 's' or 'es' in present simple."
@@ -262,7 +216,6 @@ class Spinner_act : AppCompatActivity() {
     }
 
     private fun skipExercise() {
-        // Mostrar un mensaje
         Toast.makeText(this, "Skipped. Try to answer next time!", Toast.LENGTH_SHORT).show()
         nextExercise()
     }

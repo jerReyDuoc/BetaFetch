@@ -17,6 +17,15 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyList_act"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfile_act"
+            android:exported="false" />
+        <activity
+            android:name=".Dashboard_act"
+            android:exported="false" />
+        <activity
             android:name=".Preferences_act"
             android:exported="false" />
         <activity
@@ -27,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".Spinner_act"
-            android:exported="false" />
-        <activity
-            android:name=".Listar_act"
             android:exported="false" />
         <activity
             android:name=".Registro_act"

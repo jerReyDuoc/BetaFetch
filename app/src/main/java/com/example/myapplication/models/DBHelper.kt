@@ -847,4 +847,138 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
         return existe
     }
+    fun buscarUsuarioPorId(id: Int): Usuario? {
+        val db = readableDatabase
+        var usuario: Usuario? = null
+
+        val cursor = db.query(
+            TABLE_NAME,
+            null,
+            "$COLUMN_ID = ?",
+            arrayOf(id.toString()),
+            null, null, null
+        )
+
+        if (cursor.moveToFirst()) {
+            usuario = Usuario(
+                id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                nombre = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMBRE)),
+                apellido = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APELLIDO)),
+                correo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CORREO)),
+                pais = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PAIS)),
+                celular = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CELULAR)),
+                fecNac = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_FECNAC)),
+                nomUsuario = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOMUSUARIO)),
+                contrasena = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTRASENA))
+            )
+        }
+
+        cursor.close()
+        db.close()
+        return usuario
+    }
+
+    // ==================== MÉTODOS PARA MI LISTA ====================
+
+    fun obtenerTodasLasPeliculas(): List<Pelicula> {
+        val lista = mutableListOf<Pelicula>()
+        val db = readableDatabase
+
+        val cursor = db.query(TABLE_PELICULAS, null, null, null, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val pelicula = Pelicula(
+                    titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo")),
+                    director = cursor.getString(cursor.getColumnIndexOrThrow("director")),
+                    anio = cursor.getInt(cursor.getColumnIndexOrThrow("anio")),
+                    duracionMinutos = cursor.getInt(cursor.getColumnIndexOrThrow("duracionMinutos"))
+                )
+                lista.add(pelicula)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
+
+    fun obtenerTodasLasSeries(): List<Serie> {
+        val lista = mutableListOf<Serie>()
+        val db = readableDatabase
+
+        val cursor = db.query(TABLE_SERIES, null, null, null, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val serie = Serie(
+                    titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo")),
+                    temporadas = cursor.getInt(cursor.getColumnIndexOrThrow("temporadas")),
+                    episodiosPorTemporada = cursor.getInt(cursor.getColumnIndexOrThrow("episodiosPorTemporada")),
+                    plataforma = cursor.getString(cursor.getColumnIndexOrThrow("plataforma"))
+                )
+                lista.add(serie)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
+
+    fun obtenerTodasLasCanciones(): List<Cancion> {
+        val lista = mutableListOf<Cancion>()
+        val db = readableDatabase
+
+        val cursor = db.query(TABLE_CANCIONES, null, null, null, null, null, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val cancion = Cancion(
+                    titulo = cursor.getString(cursor.getColumnIndexOrThrow("titulo")),
+                    artista = cursor.getString(cursor.getColumnIndexOrThrow("artista")),
+                    album = cursor.getString(cursor.getColumnIndexOrThrow("album")),
+                    genero = cursor.getString(cursor.getColumnIndexOrThrow("genero"))
+                )
+                lista.add(cancion)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
+
+    fun eliminarPelicula(titulo: String): Int {
+        val db = writableDatabase
+        val resultado = db.delete(
+            TABLE_PELICULAS,
+            "titulo = ?",
+            arrayOf(titulo)
+        )
+        db.close()
+        return resultado
+    }
+
+    fun eliminarSerie(titulo: String): Int {
+        val db = writableDatabase
+        val resultado = db.delete(
+            TABLE_SERIES,
+            "titulo = ?",
+            arrayOf(titulo)
+        )
+        db.close()
+        return resultado
+    }
+
+    fun eliminarCancion(titulo: String, artista: String): Int {
+        val db = writableDatabase
+        val resultado = db.delete(
+            TABLE_CANCIONES,
+            "titulo = ? AND artista = ?",
+            arrayOf(titulo, artista)
+        )
+        db.close()
+        return resultado
+    }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/et_password_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/borde_redondo"
+        android:fontFamily="@font/inter"
+        android:hint=" Enter your password"
+        android:inputType="textPassword"
+        android:paddingHorizontal="12dp" />
+
+</LinearLayout>
